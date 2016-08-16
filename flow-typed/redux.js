@@ -7,16 +7,16 @@ declare module 'redux' {
 
   */
 
-  declare type Dispatch<S, A> = (action: A) => A;
+  declare type Dispatch<A: { type: $Subtype<string> }> = (action: A) => A;
 
   declare type MiddlewareAPI<S, A> = {
-    dispatch: Dispatch<S, A>;
+    dispatch: Dispatch<A>;
     getState(): S;
   };
 
-  declare type Store<S, A: { type: $Subtype<string> }> = {
+  declare type Store<S, A> = {
     // rewrite MiddlewareAPI members in order to get nicer error messages (intersections produce long messages)
-    dispatch: Dispatch<S, A>;
+    dispatch: Dispatch<A>;
     getState(): S;
     subscribe(listener: () => void): () => void;
     replaceReducer(nextReducer: Reducer<S, A>): void
@@ -26,7 +26,7 @@ declare module 'redux' {
 
   declare type Middleware<S, A> =
     (api: MiddlewareAPI<S, A>) =>
-      (next: Dispatch<S, A>) => Dispatch<S, A>;
+      (next: Dispatch<A>) => Dispatch<A>;
 
   declare type StoreCreator<S, A> = {
     <S, A>(reducer: Reducer<S, A>, enhancer?: StoreEnhancer<S, A>): Store<S, A>;
@@ -53,18 +53,18 @@ declare module 'redux' {
 
   declare function applyMiddleware<S, A>(...middlewares: Array<Middleware<S, A>>): StoreEnhancer<S, A>;
 
-  declare function bindActionCreators<S, A>(actionCreators: Fn0<A>, dispatch: Dispatch<S, A>): Fn0<A>;
-  declare function bindActionCreators<S, A, B1>(actionCreators: Fn1<A, B1>, dispatch: Dispatch<S, A>): Fn1<A, B1>;
-  declare function bindActionCreators<S, A, B1, B2>(actionCreators: Fn2<A, B1, B2>, dispatch: Dispatch<S, A>): Fn2<A, B1, B2>;
-  declare function bindActionCreators<S, A, B1, B2, B3>(actionCreators: Fn3<A, B1, B2, B3>, dispatch: Dispatch<S, A>): Fn3<A, B1, B2, B3>;
-  declare function bindActionCreators<S, A, B1, B2, B3, B4>(actionCreators: Fn4<A, B1, B2, B3, B4>, dispatch: Dispatch<S, A>): Fn4<A, B1, B2, B3, B4>;
-  declare function bindActionCreators<S, A, B1, B2, B3, B4, B5>(actionCreators: Fn5<A, B1, B2, B3, B4, B5>, dispatch: Dispatch<S, A>): Fn5<A, B1, B2, B3, B4, B5>;
-  declare function bindActionCreators<S, A, B1, B2, B3, B4, B5, B6>(actionCreators: Fn6<A, B1, B2, B3, B4, B5, B6>, dispatch: Dispatch<S, A>): Fn6<A, B1, B2, B3, B4, B5, B6>;
-  declare function bindActionCreators<S, A, B1, B2, B3, B4, B5, B6, B7>(actionCreators: Fn7<A, B1, B2, B3, B4, B5, B6, B7>, dispatch: Dispatch<S, A>): Fn7<A, B1, B2, B3, B4, B5, B6, B7>;
-  declare function bindActionCreators<S, A, B1, B2, B3, B4, B5, B6, B7, B8>(actionCreators: Fn8<A, B1, B2, B3, B4, B5, B6, B7, B8>, dispatch: Dispatch<S, A>): Fn8<A, B1, B2, B3, B4, B5, B6, B7, B8>;
-  declare function bindActionCreators<S, A, B1, B2, B3, B4, B5, B6, B7, B8, B9>(actionCreators: Fn9<A, B1, B2, B3, B4, B5, B6, B7, B8, B9>, dispatch: Dispatch<S, A>): Fn9<A, B1, B2, B3, B4, B5, B6, B7, B8, B9>;
+  declare function bindActionCreators<A>(actionCreators: Fn0<A>, dispatch: Dispatch<A>): Fn0<A>;
+  declare function bindActionCreators<A, B1>(actionCreators: Fn1<A, B1>, dispatch: Dispatch<A>): Fn1<A, B1>;
+  declare function bindActionCreators<A, B1, B2>(actionCreators: Fn2<A, B1, B2>, dispatch: Dispatch<A>): Fn2<A, B1, B2>;
+  declare function bindActionCreators<A, B1, B2, B3>(actionCreators: Fn3<A, B1, B2, B3>, dispatch: Dispatch<A>): Fn3<A, B1, B2, B3>;
+  declare function bindActionCreators<A, B1, B2, B3, B4>(actionCreators: Fn4<A, B1, B2, B3, B4>, dispatch: Dispatch<A>): Fn4<A, B1, B2, B3, B4>;
+  declare function bindActionCreators<A, B1, B2, B3, B4, B5>(actionCreators: Fn5<A, B1, B2, B3, B4, B5>, dispatch: Dispatch<A>): Fn5<A, B1, B2, B3, B4, B5>;
+  declare function bindActionCreators<A, B1, B2, B3, B4, B5, B6>(actionCreators: Fn6<A, B1, B2, B3, B4, B5, B6>, dispatch: Dispatch<A>): Fn6<A, B1, B2, B3, B4, B5, B6>;
+  declare function bindActionCreators<A, B1, B2, B3, B4, B5, B6, B7>(actionCreators: Fn7<A, B1, B2, B3, B4, B5, B6, B7>, dispatch: Dispatch<A>): Fn7<A, B1, B2, B3, B4, B5, B6, B7>;
+  declare function bindActionCreators<A, B1, B2, B3, B4, B5, B6, B7, B8>(actionCreators: Fn8<A, B1, B2, B3, B4, B5, B6, B7, B8>, dispatch: Dispatch<A>): Fn8<A, B1, B2, B3, B4, B5, B6, B7, B8>;
+  declare function bindActionCreators<A, B1, B2, B3, B4, B5, B6, B7, B8, B9>(actionCreators: Fn9<A, B1, B2, B3, B4, B5, B6, B7, B8, B9>, dispatch: Dispatch<A>): Fn9<A, B1, B2, B3, B4, B5, B6, B7, B8, B9>;
   // unsafe (all action creator signatures are erased)
-  declare function bindActionCreators<S, A, K, C: ActionCreators<K, A>>(actionCreators: C, dispatch: Dispatch<S, A>): ActionCreators<$Keys<C>, A>;
+  declare function bindActionCreators<A, K, C: ActionCreators<K, A>>(actionCreators: C, dispatch: Dispatch<A>): ActionCreators<$Keys<C>, A>;
 
   // unsafe (you can miss a field and / or assign a wrong reducer to a field)
   declare function combineReducers<S: Object, A>(reducers: {[key: $Keys<S>]: Reducer<any, A>}): Reducer<S, A>;

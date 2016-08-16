@@ -34,4 +34,4 @@ export type Action =
 
 export type Store = ReduxStore<State, Action>;
 
-export type Dispatch = ReduxDispatch<State, Action>;
+export type Dispatch = ReduxDispatch<Action>;
