@@ -14,6 +14,18 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + '/index.html')
 })
 
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
+app.post('/dec', function(request, response) {
+  const count = request.body.count
+  const result = { count: count - 1 }
+  // 1 second delay on the response
+  setTimeout(function() {
+    response.send(result)
+  }, 1000)
+})
+
 app.listen(port, function(error) {
   if (error) {
     console.error(error)
