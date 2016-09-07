@@ -16,6 +16,6 @@ const root = document.getElementById('root')
 
 ReactDOM.render((
   <Provider store={store}>
-    <Counter/>
+    <Counter color="red"/>
   </Provider>
 ), root)

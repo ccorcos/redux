@@ -5,6 +5,7 @@ import React from 'react'
 import classnames from 'classnames'
 import * as actions from '../../actions'
 import type { State, Dispatch, Action } from '../../types'
+import type { Connector } from 'react-redux'
 
 type Props = {
   color: 'red' | 'blue',
@@ -44,4 +45,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   decrement: dispatchProps.decrement(stateProps.count),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Counter)
+const connector: Connector<{ color: 'red' | 'blue' }, Props> = connect(
+  mapStateToProps, mapDispatchToProps, mergeProps
+)
+
+export default connector(Counter)
